@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import json
 
 app = Flask(__name__)
 
@@ -8,8 +9,13 @@ def home():
 
 @app.route('/your_url', methods=['GET', 'POST'])
 def your_url():
-    code = request.form['code']
+    
     if request.method == 'POST':
+        urls = {}
+        urls[request.form['code']] == {'url': request.form['url']}
+        with open('urls.json', 'w') as url_file:
+            json.dump(urls, url_file)
+        code = request.form['code']
         return render_template('your_url.html', code=code)
     else:
         return redirect(url_for('home'))
