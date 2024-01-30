@@ -4,8 +4,8 @@ bp = Blueprint("pages", __name__)
 
 @bp.route("/")
 def home():
-    return "Hello home!"
+    return "Hello, Home!"
 
 @bp.route("/about")
 def about():
-    return "Hello about!"
+    return "Hello, About!"
