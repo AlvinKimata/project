@@ -1,5 +1,5 @@
 from flask import (Blueprint, render_template, flash,
-                   redirect, request, url_for)
+                   redirect, request, url_for, current_app)
 
 bp = Blueprint("posts", __name__)
 from board.database import get_db
@@ -15,6 +15,7 @@ def create():
             db.execute("INSERT INTO post (author, message) VALUES (?, ?)",
                        (author, message))
             db.commit()
+            current_app.logger.info(f"New post by {author}")
             flash(f"Thanks for posting, {author}!", category="success")
             return redirect(url_for("posts.posts"))
         else:

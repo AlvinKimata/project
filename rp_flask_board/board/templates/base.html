@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>Message board {%block title %}{%endblock title%}</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}"
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}"/>
     </head>
 
     <body>
@@ -11,12 +11,12 @@
         <section>
             <header>
                 {%block header%}{%endblock header%}
-                {%for category, message in get_flashed_messages(with_categories = true) %}
-                <div class="flash {{ category }}" > {{ message }}</div>
-                
+                {%for category, message in get_flashed_messages(with_categories = true)%}
+                    <div class="flash {{ category }}" > {{ message }}</div>
+                {%endfor%}
             </header>
             <main>
-                {%block content%}<p>No messages</p>{% endblock content %}
+                {%block content%}<p>No messages</p>{%endblock content%}
             </main>
         </section>
     </body>
