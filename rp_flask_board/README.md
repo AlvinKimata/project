@@ -1,0 +1,1 @@
+Source code for [Build a Scalable Flask Web Project From Scratch](https://realpython.com/flask-project/)
