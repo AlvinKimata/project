@@ -1,5 +1,6 @@
-from flask import render_template, current_app, request
+from flask import render_template, current_app, request, jsonify
 
 def page_not_found(e):
     current_app.logger.info(f"'{e.name}' error ({e.code}) at {request.url}")
-    return render_template("errors/404.html"), 404
+    # return render_template("errors/404.html"), 404
+    return jsonify({"trace": "Error, page not found"})
