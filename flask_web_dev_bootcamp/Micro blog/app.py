@@ -49,3 +49,40 @@ def render_expressions():
     }
 
     return render_template("expressions.html", **kwargs)
+
+
+class GalileanMoons:
+    def __init__(self, first, second, third, fourth):
+        self.first = first
+        self.second = second
+        self.third = third
+        self.fourth = fourth
+
+
+@app.route("/data-structures")
+def render_data_structures():
+
+    # list operations
+    movies = [
+        "Leon the Professional",
+        "The Usual Suspects",
+        "A Beautiful Mind"
+    ]
+
+    # dictionary operations
+    car = {
+        "brand": "Tesla",
+        "model": "Roadstar",
+        "year": "2020",
+    }
+
+    #Custom data ops.
+    moons = GalileanMoons("Io", "Europa", "Ganymede", "Callisto")
+
+    kwargs = {
+        "movies": movies,
+        "car": car,
+        "moons": moons
+    }
+
+    return render_template("data_structures.html", **kwargs)
