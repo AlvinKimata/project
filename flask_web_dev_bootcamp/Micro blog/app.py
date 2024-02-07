@@ -1,88 +1,31 @@
+import requests
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///weather.db"
 
-@app.route("/")
-def hello_world():
-    return "hello, world"
+db = SQLAlchemy(app)
 
+class City(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(50), nullable = False)
 
-@app.route("/first_page")
-def render_first_page():
-    return render_template("first_page.html")
+@app.route("/", methods = ["GET", "POST"])
+def index():
+    api_key = "1325dd373f3a1565484ec02597270807"
+    lat = "36.8219"
+    lon = "1.2921"
+    url = "https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid={api_key}"
 
-@app.route("/second_page")
-def render_second_page():
-    return render_template("second_page.html")
-
-@app.route("/jinja2")
-def render_jinja2_intro():
-    return render_template(
-        "jinja2-intro.html", name = "John Doe",
-        template_name = "Jinja2")
-
-@app.route("/expressions/")
-def render_expressions():
-    # interpolation
-    color = "brown"
-    animal_one = "fox"
-    animal_two = "dog"
-
-    # addition and subtraction
-    orange_amount = 10
-    apple_amount = 20
-    donate_amount = 15
-
-    # string concatenation
-    first_name = "Captain"
-    last_name = "Marvel"
-
-    kwargs = {
-        "color": color,
-        "animal_one": animal_one,
-        "animal_two": animal_two,
-        "orange_amount": orange_amount,
-        "apple_amount": apple_amount,
-        "donate_amount": donate_amount,
-        "first_name": first_name,
-        "last_name": last_name
+    r = requests.get(url).json()
+    weather = {
+        "latitude": lat,
+        'longitude': lon,
+        "Temperature": r['main']['temp'],
+        "description": r['weather'][0]['description'],
+        "icon": r['weather'][0]['icon']
     }
-
-    return render_template("expressions.html", **kwargs)
-
-
-class GalileanMoons:
-    def __init__(self, first, second, third, fourth):
-        self.first = first
-        self.second = second
-        self.third = third
-        self.fourth = fourth
-
-
-@app.route("/data-structures")
-def render_data_structures():
-
-    # list operations
-    movies = [
-        "Leon the Professional",
-        "The Usual Suspects",
-        "A Beautiful Mind"
-    ]
-
-    # dictionary operations
-    car = {
-        "brand": "Tesla",
-        "model": "Roadstar",
-        "year": "2020",
-    }
-
-    #Custom data ops.
-    moons = GalileanMoons("Io", "Europa", "Ganymede", "Callisto")
-
-    kwargs = {
-        "movies": movies,
-        "car": car,
-        "moons": moons
-    }
-
-    return render_template("data_structures.html", **kwargs)
+    print(weather)
+    # return render_template("weather.html")
