@@ -5,3 +5,4 @@ flask-wtf
 pymongo
 passlib
 pymongo
+Flask-SQLAlchemy
