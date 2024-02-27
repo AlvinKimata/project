@@ -8,6 +8,12 @@ def create_app(config_class = Config):
     #Initialize Flask extensions here
 
     #Register blueprints here.
+    from app.main import bp as main_bp
+    app.register_blueprint(main_bp)
+
+    #Register 'posts' blueprint.
+    from app.posts import bp as posts_bp
+    app.register_blueprint(posts_bp, url_prefix = '/posts')
 
 
     @app.route('/test/')
