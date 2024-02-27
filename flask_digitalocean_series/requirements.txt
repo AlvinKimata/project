@@ -4,5 +4,4 @@ python-dotenv
 flask-wtf
 pymongo
 passlib
-pymongo
 Flask-SQLAlchemy
