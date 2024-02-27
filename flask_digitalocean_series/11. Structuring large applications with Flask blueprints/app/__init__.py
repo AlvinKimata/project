@@ -15,6 +15,10 @@ def create_app(config_class = Config):
     from app.posts import bp as posts_bp
     app.register_blueprint(posts_bp, url_prefix = '/posts')
 
+    #Register 'questions' bleprint.
+    from app.questions import bp as questions_bp
+    app.register_blueprint(questions_bp, url_prefix = '/questions')
+
 
     @app.route('/test/')
     def test_page():
